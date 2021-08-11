@@ -26,12 +26,8 @@ logging.getLogger('asyncio').setLevel(logging.WARNING) # Remove log mesage from 
 name_route      = 'files/'
 name_debug_file   = 'debug.log'
 
-try:
+if not os.path.isdir(name_route):
     os.mkdir(name_route)
-except OSError:
-    print ("Creation of the directory %s failed" % path)
-else:
-    print ("Successfully created the directory %s " % path)
 
 route_debug_file   = name_route + name_debug_file
 f = open(route_debug_file,'a')
@@ -60,4 +56,16 @@ class DEBUG_CLASS:
         pass
 
 if __name__ == "__main__":
-    print("Prueba")
+    # Variables
+    var = DEBUG_CLASS(__name__)
+    shoot = var.log_file
+
+    shoot.debug("Level 0 - This message is not shown")
+    shoot.info("Level 1 - This message shows info appears on the cmd and also in the debug.log file")
+    shoot.warning("Level 2 - This message shows a warning appears on the cmd and also in the debug.log file")
+    shoot.error("Level 3 - This message shows an error appears on the cmd and also in the debug.log file")
+    shoot.critical("Level 4 - This message is critical and appears on the cmd and also in the debug.log file")
+
+    var.changeLevelToDebug()                # Call this function for showing debug messages
+    shoot = var.log_file
+    shoot.debug("Now the message appears, this is ideal for debugging processes")
