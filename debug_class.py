@@ -1,30 +1,34 @@
-'''
------------------------------------------------------------------------------
-Author       :   Luis de la Barba
-Date         :   18/06/2020
-Name         :   debug_class.py
-Description  :
-* This file is for formatting the logging and displaying debugging info
------------------------------------------------------------------------------
-'''
+
+"""
+________________________________________________________________________________
+
+    File        :   get_financial_class.py
+    Author      :   Luis de la Barba
+    Date        :   18-Jun-2021
+    Purpose     :   Initializes the debuging functions
+    Register    :
+        Ref     Date            Author                  Description
+--------------------------------------------------------------------------------
+        01      18-Jun-2021     Luis de la Barba        File created
+________________________________________________________________________________
+"""
 
 import logging
 import os
 
-'''
-LEVELS:
-    1. NOTSET
-    2. DEBUG
-    3. INFO
-    4. WARNING
-    5. ERROR
-    6. CRITICAL
-'''
+
+# LEVELS:
+#   1. NOTSET
+#   2. DEBUG
+#   3. INFO
+#   4. WARNING
+#   5. ERROR
+#   6. CRITICAL
 
 logging.getLogger('asyncio').setLevel(logging.WARNING) # Remove log mesage from the asyncio library
 
 name_route      = 'files/'
-name_debug_file   = 'debug.log'
+name_debug_file = 'debug.log'
 
 if not os.path.isdir(name_route):
     os.mkdir(name_route)
