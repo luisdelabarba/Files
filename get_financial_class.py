@@ -17,7 +17,7 @@ ________________________________________________________________________________
 import debug_class
 import json
 import requests
-#import pandas as pd
+# import pandas as pd
 
 # Variables
 var = debug_class.DEBUG_CLASS(__name__)
@@ -59,9 +59,7 @@ class GET_FINANCIAL_CLASS:
         text = r.json()
         self.company_daily = text["Time Series (Daily)"]
 
-        cont = 0
         for i in self.company_daily:
-            #print(self.company_daily[i])
             self.company_daily_close.append(self.company_daily[i]["4. close"])
             self.company_daily_high.append(self.company_daily[i]["2. high"])
             self.company_daily_low.append(self.company_daily[i]["3. low"])
@@ -80,15 +78,25 @@ class GET_FINANCIAL_CLASS:
         shoot.debug(" - Name: " + self.company_overview["Name"])
         shoot.debug(" - " + self.company_overview["Exchange"] + ", " + self.company_overview["Symbol"])
         shoot.debug("*****************************************")
-        shoot.debug(" - Target Price:   " + self.company_overview["AnalystTargetPrice"])
+        shoot.debug(" - Analyst Price:  " + self.company_overview["AnalystTargetPrice"])
         shoot.debug(" - Clossing price: " + self.company_daily_close[-1])
         shoot.debug(" - Highest:        " + self.company_daily_high[-1])
         shoot.debug(" - Lowest:         " + self.company_daily_low[-1])
+        shoot.debug("*****************************************")
         shoot.debug("")
 
 if __name__ == "__main__":
 
     company = "AMD"
+    company = "INTC"
+    company = "NVDA"
+    company = "AGR"
+    company = "UPS"
 
     enterprise = GET_FINANCIAL_CLASS(company)
     enterprise.info()
+
+
+
+    #tables = pd.read_html('https://www.marketwatch.com/investing/stock/ibm/analystestimates?mod=mw_quote_analyst')
+    #print(tables[6])
