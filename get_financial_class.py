@@ -17,7 +17,7 @@ ________________________________________________________________________________
 import debug_class
 import json
 import requests
-# import pandas as pd
+import pandas as pd
 
 # Variables
 var = debug_class.DEBUG_CLASS(__name__)
@@ -30,6 +30,7 @@ class GET_FINANCIAL_CLASS:
     company_daily_close = []
     company_daily_high = []
     company_daily_low = []
+    marketwatch_analisys = []
 # ******************************************************************************
 #   Function name:  __init__
 #   Descriptions:   Function for initializing the class
@@ -37,8 +38,10 @@ class GET_FINANCIAL_CLASS:
     def __init__(self,id="AMD"):
         self.search_comp = id
 
+        shoot.info("Class initiated for " + self.search_comp)
         self.get_company_overview()
         self.get_company_daily()
+        self.get_analisys_info()
 
 # ******************************************************************************
 #   Function name:  get_company_overview
@@ -69,6 +72,16 @@ class GET_FINANCIAL_CLASS:
         self.company_daily_high = self.company_daily_high[::-1]
         self.company_daily_low = self.company_daily_low[::-1]
 
+# ******************************************************************************
+#   Function name:  get_analisys_info
+#   Descriptions:   Get the data from the marketwatch website
+# ******************************************************************************
+    def get_analisys_info(self):
+        tables = pd.read_html('https://www.marketwatch.com/investing/stock/' + self.search_comp + '/analystestimates?mod=mw_quote_analyst')
+        self.marketwatch_analisys.append(tables[5].iloc[0,1])
+        self.marketwatch_analisys.append(tables[5].iloc[2,1])
+        self.marketwatch_analisys.append(tables[5].iloc[3,1])
+
 # *******************************************************************************
 #   Function name:  info
 #   Descriptions:   Class for potting managemant
@@ -83,20 +96,19 @@ class GET_FINANCIAL_CLASS:
         shoot.debug(" - Highest:        " + self.company_daily_high[-1])
         shoot.debug(" - Lowest:         " + self.company_daily_low[-1])
         shoot.debug("*****************************************")
+        shoot.debug(" MARKET WATCH ANALYSIS")
+        shoot.debug(" - High:           " + self.marketwatch_analisys[0])
+        shoot.debug(" - Low:            " + self.marketwatch_analisys[1])
+        shoot.debug(" - Average:        " + self.marketwatch_analisys[2])
+        shoot.debug("*****************************************")
         shoot.debug("")
 
 if __name__ == "__main__":
 
     company = "AMD"
     company = "INTC"
-    company = "NVDA"
-    company = "AGR"
-    company = "UPS"
+    #company = "NVDA"
+    #company = "AGR"
 
     enterprise = GET_FINANCIAL_CLASS(company)
     enterprise.info()
-
-
-
-    #tables = pd.read_html('https://www.marketwatch.com/investing/stock/ibm/analystestimates?mod=mw_quote_analyst')
-    #print(tables[6])
